@@ -5,6 +5,10 @@ import spotipy
 import spotipy.util as util
 import sys
 
+import codecs
+UTF8Writer = codecs.getwriter('utf8')
+sys.stdout = UTF8Writer(sys.stdout)
+
 def read_token():
     with open(os.path.expanduser('~/.playa')) as f:
         return json.load(f)['token']
@@ -19,6 +23,7 @@ def command_token(args):
         print "Can't get token for", args.username
 
 def show_tracks(tracks):
+    print("      %32.32s %32.32s %s" % ('Artist', 'Album', 'Track'))
     for i, item in enumerate(tracks['items']):
         track = item['track']
         print("   %d %32.32s %32.32s %s" % (i, track['artists'][0]['name'], track['album']['name'], track['name']))
